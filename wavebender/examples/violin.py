@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from wavebender.wavebender import *
+from wavebender import *
 
 def violin(amplitude=0.1):
     # simulates a violin playing G.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from wavebender.wavebender import *
+from wavebender import *
 
 channels = ((square_wave(440.0, amplitude=0.1),),)
 

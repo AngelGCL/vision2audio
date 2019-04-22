@@ -7,7 +7,7 @@ Good luck! (This is a work in progress.)
 """
 import sys
 import math
-from wavebender.wavebender import wave
+from wavebender import wave
 import struct
 import random
 import argparse

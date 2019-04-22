@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from wavebender.wavebender import *
+from wavebender import *
 from itertools import *
 
 def ncycles(iterable, n):

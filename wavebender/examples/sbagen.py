@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import re
-from wavebender.wavebender import *
+from wavebender import *
 from itertools import *
 
 def sbagen_phrase(phrase):
