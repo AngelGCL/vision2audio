@@ -90,12 +90,13 @@ for col in range(w):
 
         print(midi, ':', duration)
 
-        output.addNote(track, channel, midi, time, duration, volume)
+        if midi != 0:
+            output.addNote(track, channel, midi, time, duration, volume)
 
-        time += duration
+            time += duration
         # print(time)
 
-with open("newTest4.mid", "wb") as output_file:
+with open("newTest5.mid", "wb") as output_file:
     output.writeFile(output_file)
 
 
