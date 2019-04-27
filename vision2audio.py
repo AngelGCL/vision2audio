@@ -23,7 +23,41 @@ note_midi_conversion = {
     'SPACE': -1
 }
 
-m = Image.open("abcdefga.png")
+note_duration_conversion = {
+    (0, 255, 255): 1/2,
+    (255, 0, 0): 1/2,
+    (0, 0, 255): 1/2,
+    (0, 255, 0): 1/2,
+    (127, 0, 255): 1/2,
+    (255, 128, 0): 1/2,
+    (255, 0, 255): 1/2,
+    (0, 204, 204): 1/4,
+    (204, 0, 0): 1/4,
+    (0, 0, 204): 1/4,
+    (0, 204, 0): 1/4,
+    (102, 0, 204): 1/4,
+    (204, 102, 0): 1/4,
+    (204, 0, 204): 1/4,
+    (0, 153, 153): 1/8,
+    (153, 0, 0): 1/8,
+    (0, 0, 153): 1/8,
+    (0, 153, 0): 1/8,
+    (76, 0, 153): 1/8,
+    (153, 76, 0): 1/8,
+    (153, 0, 153): 1/8,
+    (0, 102, 102): 1/16,
+    (102, 0, 0): 1/16,
+    (0, 0, 102): 1/16,
+    (0, 102, 0): 1/16,
+    (51, 0, 102): 1/16,
+    (102, 51, 0): 1/16,
+    (102, 0, 102): 1/16,
+    'SPACE': -1
+}
+
+
+
+m = Image.open("abcdefg.png")
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -50,17 +84,18 @@ for col in range(w):
 
         repeatCount = 0
         # check if next pixel is repeated
-        midi = note_midi_conversion[(r, g, b)]
-        duration = 1/2
+
+        midi = note_midi_conversion.get((r, g, b), 0)
+        duration = note_duration_conversion.get((r, g, b), 0)
+
+        print(midi, ':', duration)
 
         output.addNote(track, channel, midi, time, duration, volume)
 
         time += duration
-        print(time)
+        # print(time)
 
-        print(midi)
-
-with open("newTest.mid", "wb") as output_file:
+with open("newTest4.mid", "wb") as output_file:
     output.writeFile(output_file)
 
 
