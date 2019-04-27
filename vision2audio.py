@@ -58,7 +58,7 @@ note_duration_conversion = {
 }
 
 
-m = Image.open("abcdeftest.png")
+m = Image.open("./scaler/longatest.png")
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -90,5 +90,5 @@ for row in range(h):
 
         time += duration+(1/4)
 
-with open("newTest5.mid", "wb") as output_file:
+with open("lalonga.mid", "wb") as output_file:
     output.writeFile(output_file)
