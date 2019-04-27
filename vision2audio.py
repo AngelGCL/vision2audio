@@ -58,7 +58,6 @@ note_duration_conversion = {
 }
 
 
-
 m = Image.open("eb.png")
 rgb_im = m.convert('RGB')
 
@@ -72,8 +71,7 @@ result = list()
 track = 0  # Track (default 0)
 channel = 0  # Channel (default 0)
 time = 0  # In beats
-# duration = h  # In beats
-tempo = 110  # In BPM
+tempo = 90  # In BPM
 volume = 100
 
 output = MIDIFile(1)
@@ -84,40 +82,13 @@ for row in range(h):
         r, g, b = rgb_im.getpixel((col, row))
         print('[%i,%i]:' % (row, col), (r, g, b))
 
-        repeatCount = 0
-        # check if next pixel is repeated
-
         note, duration = note_duration_conversion.get((r, g, b), [0, 0])
-        # duration = note_duration_conversion.get((r, g, b), 0)
 
         if note != -1:
             print(note, ':', duration)
-            output.addNote(track, channel, note, time, duration+(1/8), volume)
+            output.addNote(track, channel, note, time, duration+(1/4), volume)
 
-        time += duration+(1/8)
-        # print(time)
+        time += duration+(1/4)
 
 with open("newTest5.mid", "wb") as output_file:
     output.writeFile(output_file)
-
-
-
-#
-# degrees = suparr  # MIDI note number
-# track = 0  # Track (default 0)
-# channel = 0  # Channel (default 0)
-# time = 0  # In beats
-# duration = 1  # In beats
-# tempo = 120  # In BPM
-# volume = 100  # 0-127, as per the MIDI standard
-#
-# output = MIDIFile(1)
-# output.addTempo(track, time, tempo)
-#
-# for e in degrees:
-#     output.addNote(track, channel, e[0], time, e[1], volume)
-#     print('added note:', e[0])
-#     time += e[1]
-#
-# with open("test.mid", "wb") as output_file:
-#     output.writeFile(output_file)
