@@ -24,42 +24,40 @@ note_midi_conversion = {
 }
 
 note_duration_conversion = {
-    (0, 255, 255): [57, 1/2],
-    (255, 0, 0): [59, 1/2],
-    (0, 0, 255): [48, 1/2],
-    (0, 255, 0): [50, 1/2],
-    (127, 0, 255): [52, 1/2],
-    (255, 128, 0): [53, 1/2],
-    (255, 0, 255): [55, 1/2],
-    (0, 204, 204): [57, 1/4],
-    (204, 0, 0): [59, 1/4],
-    (0, 0, 204): [48, 1/4],
-    (0, 204, 0): [50, 1/4],
-    (102, 0, 204): [52, 1/4],
-    (204, 102, 0): [53, 1/4],
-    (204, 0, 204): [55, 1/4],
-    (0, 153, 153): [57, 1/8],
-    (153, 0, 0): [59, 1/8],
-    (0, 0, 153): [48, 1/8],
-    (0, 153, 0): [50, 1/8],
-    (76, 0, 153): [52, 1/8],
-    (153, 76, 0): [53, 1/8],
-    (153, 0, 153): [55, 1/8],
-    (0, 102, 102): [57, 1/16],
-    (102, 0, 0): [59, 1/16],
-    (0, 0, 102): [48, 1/16],
-    (0, 102, 0): [50, 1/16],
-    (51, 0, 102): [52, 1/16],
-    (102, 51, 0): [53, 1/16],
-    (102, 0, 102): [55, 1/16],
-
-    (172, 172, 172): [-1, 1/8],
+    (0, 255, 255): 1/2,
+    (255, 0, 0): 1/2,
+    (0, 0, 255): 1/2,
+    (0, 255, 0): 1/2,
+    (127, 0, 255): 1/2,
+    (255, 128, 0): 1/2,
+    (255, 0, 255): 1/2,
+    (0, 204, 204): 1/4,
+    (204, 0, 0): 1/4,
+    (0, 0, 204): 1/4,
+    (0, 204, 0): 1/4,
+    (102, 0, 204): 1/4,
+    (204, 102, 0): 1/4,
+    (204, 0, 204): 1/4,
+    (0, 153, 153): 1/8,
+    (153, 0, 0): 1/8,
+    (0, 0, 153): 1/8,
+    (0, 153, 0): 1/8,
+    (76, 0, 153): 1/8,
+    (153, 76, 0): 1/8,
+    (153, 0, 153): 1/8,
+    (0, 102, 102): 1/16,
+    (102, 0, 0): 1/16,
+    (0, 0, 102): 1/16,
+    (0, 102, 0): 1/16,
+    (51, 0, 102): 1/16,
+    (102, 51, 0): 1/16,
+    (102, 0, 102): 1/16,
     'SPACE': -1
 }
 
 
 
-m = Image.open("eb.png")
+m = Image.open("./scaler/eb.png")
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -79,25 +77,26 @@ volume = 100
 output = MIDIFile(1)
 output.addTempo(track, time, tempo)
 
-for row in range(h):
-    for col in range(w):
+for col in range(w):
+    for row in range(h):
         r, g, b = rgb_im.getpixel((col, row))
         print('[%i,%i]:' % (row, col), (r, g, b))
 
         repeatCount = 0
         # check if next pixel is repeated
 
-        note, duration = note_duration_conversion.get((r, g, b), [0, 0])
-        # duration = note_duration_conversion.get((r, g, b), 0)
+        midi = note_midi_conversion.get((r, g, b), 0)
+        duration = note_duration_conversion.get((r, g, b), 0)
 
-        if note != -1:
-            print(note, ':', duration)
-            output.addNote(track, channel, note, time, duration+(1/8), volume)
+        print(midi, ':', duration)
 
-        time += duration+(1/8)
+        if midi != 0:
+            output.addNote(track, channel, midi, time, duration, volume)
+
+            time += duration
         # print(time)
 
-with open("newTest5.mid", "wb") as output_file:
+with open("newTest7.mid", "wb") as output_file:
     output.writeFile(output_file)
 
 
