@@ -21,25 +21,34 @@ volume = 100
 
 output = MIDIFile(1)
 output.addTempo(track, time, tempo)
-chunk = h*w*0.10
-chunk_arr = []
+chunk = (h*w)*0.1
+print('chunk is size %i' % chunk)
+arrR = []
+arrB = []
+arrG = []
 iter = 0
 for row in range(h):
     for col in range(w):
         r, g, b = rgb_im.getpixel((col, row))
-        chunk_arr.append([r, g, b])
-        iter+=1
+        arrG.append(g)
+        arrR.append(r)
+        arrB.append(b)
+        iter = iter + 1
+        #print ([r,g,b])
 
-        if iter == chunk:
+        if iter >= chunk:
         #create a note here
-            mediana= median(chunk_arr)
-            chunk_arr = []
-            note = (mediana[0]%21 + mediana[1]%21 + mediana[3]%21) + 70
+            note = (median(arrR)%21 + median(arrG)%21 + median(arrB)%21) + 70
+            print('the note is %i' % note)
             if note > 108:
                 note = 108
             duration = 1/4
             output.addNote(track, channel, note, time, duration+(1/4), volume)
             time += duration + (1 / 4)
+            iter=0
+            arrB = []
+            arrG = []
+            arrR = []
 
 with open("badbunny.mid", "wb") as output_file:
     output.writeFile(output_file)
