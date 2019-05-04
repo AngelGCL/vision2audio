@@ -10,8 +10,6 @@ w, h = m.size
 print(w)
 print(h)
 
-result = list()
-
 
 track = 0  # Track (default 0)
 channel = 0  # Channel (default 0)
@@ -19,14 +17,18 @@ time = 0  # In beats
 tempo = 90  # In BPM
 volume = 100
 
+output_arr = list()
+
 output = MIDIFile(1)
 output.addTempo(track, time, tempo)
+
 chunk = (h*w)*0.1
 print('chunk is size %i' % chunk)
 arrR = []
 arrB = []
 arrG = []
 iter = 0
+
 for row in range(h):
     for col in range(w):
         r, g, b = rgb_im.getpixel((col, row))
@@ -40,12 +42,12 @@ for row in range(h):
             note = (median(arrR) % 21 + median(arrG) % 21 + median(arrB) % 21) + 36
             note = int(note)
 
-            print('the note is %i' % note)
-
             if note > 108:
                 note = 108
 
             duration = 1
+
+            output_arr.append(note)
 
             output.addNote(track, channel, note, time, duration, volume)
             time += duration
@@ -55,6 +57,8 @@ for row in range(h):
             arrB = []
             arrG = []
             arrR = []
+
+print(output_arr)
 
 with open("test.mid", "wb") as output_file:
     output.writeFile(output_file)
