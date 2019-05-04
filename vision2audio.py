@@ -3,7 +3,8 @@ from midiutil import MIDIFile
 from statistics import median
 
 
-m = Image.open("./scaler/turtle.jpg")
+m = Image.open("turtle.jpg")  # set target image here
+
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -39,7 +40,7 @@ for row in range(h):
         iter = iter + 1
 
         if iter >= chunk:
-            # create a note here
+            # create note
             note = (median(arrR) % 21 + median(arrG) % 21 + median(arrB) % 21) + 36
             note = int(note)
 
@@ -127,5 +128,6 @@ for note in corrected_output:
     output.addNote(track, channel, note, time, duration, volume)
     time += duration
 
+# output file name can be anything as long as it is followed by '.mid'
 with open("test.mid", "wb") as output_file:
     output.writeFile(output_file)
