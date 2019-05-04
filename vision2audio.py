@@ -84,19 +84,21 @@ for row in range(h):
     for col in range(w):
         r, g, b = rgb_im.getpixel((col, row))
         print('[%i,%i]:' % (row, col), (r, g, b))
-        #create a note here
-        note = (r%21 + g%21 + b%21) + 70
+
+        # create a note here
+        note = (r % 21 + g % 21 + b % 21)
         if note > 108:
             note = 108
-        
 
-        note, duration = note_duration_conversion.get((r, g, b), [0, 0])
+        print(note)
 
-        if note != -1:
-            print(note, ':', duration)
-            output.addNote(track, channel, note, time, duration+(1/4), volume)
+        # note, duration = note_duration_conversion.get((r, g, b), [0, 0])
+        #
+        # if note != -1:
+        #     print(note, ':', duration)
+        #     output.addNote(track, channel, note, time, duration+(1/4), volume)
+        #
+        # time += duration+(1/4)
 
-        time += duration+(1/4)
-
-with open("badbunny.mid", "wb") as output_file:
-    output.writeFile(output_file)
+# with open("badbunny.mid", "wb") as output_file:
+#     output.writeFile(output_file)
