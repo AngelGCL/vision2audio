@@ -3,7 +3,7 @@ from midiutil import MIDIFile
 from statistics import median
 
 
-m = Image.open("./scaler/eb.png")
+m = Image.open("./scaler/logo.png")
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -38,16 +38,9 @@ for row in range(h):
             if note > 108:
                 note = 108
             duration = 1/4
-
        # note, duration = note_duration_conversion.get((r, g, b), [0, 0])
+            output.addNote(track, channel, note, time, duration+(1/4), volume)
+            time += duration + (1 / 4)
 
-        # note, duration = note_duration_conversion.get((r, g, b), [0, 0])
-        #
-        # if note != -1:
-        #     print(note, ':', duration)
-        #     output.addNote(track, channel, note, time, duration+(1/4), volume)
-        #
-        # time += duration+(1/4)
-
-# with open("badbunny.mid", "wb") as output_file:
-#     output.writeFile(output_file)
+with open("badbunny.mid", "wb") as output_file:
+    output.writeFile(output_file)
