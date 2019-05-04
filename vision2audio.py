@@ -50,7 +50,7 @@ note_duration_conversion = {
 
     (0, 102, 102): [78, 1/16],
     (102, 0, 0): [80, 1/16],
-    (0, 0, 102): [70, 1/16], #azul
+    (0, 0, 102): [70, 1/16],
     (0, 102, 0): [72, 1/16],
     (51, 0, 102): [73, 1/16],
     (102, 51, 0): [74, 1/16],
@@ -61,7 +61,7 @@ note_duration_conversion = {
 }
 
 
-m = Image.open("./scaler/abcdefg.png")
+m = Image.open("./scaler/eb.png")
 rgb_im = m.convert('RGB')
 
 w, h = m.size
@@ -84,6 +84,11 @@ for row in range(h):
     for col in range(w):
         r, g, b = rgb_im.getpixel((col, row))
         print('[%i,%i]:' % (row, col), (r, g, b))
+        #create a note here
+        note = (r%21 + g%21 + b%21) + 70
+        if note > 108:
+            note = 108
+        
 
         note, duration = note_duration_conversion.get((r, g, b), [0, 0])
 
@@ -93,5 +98,5 @@ for row in range(h):
 
         time += duration+(1/4)
 
-with open("lalonga.mid", "wb") as output_file:
+with open("badbunny.mid", "wb") as output_file:
     output.writeFile(output_file)
