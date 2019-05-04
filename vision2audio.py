@@ -34,21 +34,27 @@ for row in range(h):
         arrR.append(r)
         arrB.append(b)
         iter = iter + 1
-        #print ([r,g,b])
 
         if iter >= chunk:
-        #create a note here
-            note = (median(arrR)%21 + median(arrG)%21 + median(arrB)%21) + 70
+            # create a note here
+            note = (median(arrR) % 21 + median(arrG) % 21 + median(arrB) % 21) + 36
+            note = int(note)
+
             print('the note is %i' % note)
+
             if note > 108:
                 note = 108
-            duration = 1/4
-            output.addNote(track, channel, note, time, duration+(1/4), volume)
-            time += duration + (1 / 4)
+
+            duration = 1
+
+            output.addNote(track, channel, note, time, duration, volume)
+            time += duration
+
+            # reset everything
             iter=0
             arrB = []
             arrG = []
             arrR = []
 
-with open("badbunny.mid", "wb") as output_file:
+with open("test.mid", "wb") as output_file:
     output.writeFile(output_file)
